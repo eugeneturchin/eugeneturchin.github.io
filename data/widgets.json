@@ -1,0 +1,322 @@
+{
+	win4reg:{
+		rnd:13,hbut:25,wbut0:25,wbut1:99,wgap:13 //высота кнопки и мин. гориз. промежуток, скругления и т.д.
+		,props: {movable: [9,-33,-133,-133], resizable: true, closable: true, maximizable:true, minimizable:true,keypressable:true}
+		,butsample:{
+			css: {
+				all:["[[hbut]]","[[wbut1]]"]
+				,sh: "[[shw1]]",ro: "[[rnd]]",bgc: "[[grd1]]"
+				,lh: "[[hbut]]",br: "gray",ta: "center",cu: "pointer"
+			}
+			,props: {pressable: true, focusable: true, valigned:true}
+			,focus: {
+				over: {"[[name]]": {css: {sh: "[[shw2]]"}}}
+				,out: {"[[name]]": {css: {sh: "[[shw1]]"}}}
+			}
+			,press: {
+				down: {"[[name]]": {css: {sh: "none",bgc:"[[clr1]]",br:"[[brd2]]"}}}
+				,up: {"[[name]]": {css: {sh: "[[shw1]]",bgc:"[[grd1]]",brd:"none"}}}
+				,process: {"[[name]]": {css: {bgc:"#dfd"}}}
+			}
+	  }
+		,skip:["butsample"]
+		
+		,keystrokes:{ //все окно
+			pars:{
+				active:	{css:{sh:"inset 0 0 9px 1px yellow, inset 0 0 3px 1px #00f"}}
+				,unactive:{css:{sh:"none"}}
+				,list:["[[name]]_buttons"]
+			}
+		,keys:{
+			TAB:{action:"next",type:"keydown"}
+			,"SHIFT+TAB":{action:"prev",type:"keydown"}
+			}
+		}
+	   ,css: {all:["eval{app.hw/1.5}","eval{app.ww/2}"]
+		   ,bgc: "#9ef #fff", brb: "gray", brr: "gray", co: "blue", sh: "7px 7px 17px #777", op: 90, ro: 7
+		}
+		,resizing_all:["[[name]]_header","[[name]]_content"]
+		,resizing:["[[name]]_footer"]
+// 		,resizing:["[[name]]_header_catcher","[[name]]_buttons","[[name]]_footer"]
+// 		,resizing_all:["[[name]]_content"]
+
+		,move: {
+			catchid: "[[name]]_header_catcher",
+			down:	{"[[name]]": {css: {op: 67, sh: "0 0 99px 13px #777"}}},
+			up:	{"[[name]]": {css: {op: 90, sh: "7px 7px 17px #777"}}}
+		}
+//*********************************************
+		,ch: {
+			"[[name]]_header":{
+				hh:19 // высота заголовка окна
+				,css: {all:["[[hh]]"],bgc: "#ccc #fff",brb: "gray"}
+				,props:{hstretchable:true}
+			   ,ch: {
+					"[[name]]_llogo":{
+						css: {all:[15,15,2,2]
+						,cu: "pointer",ro: 7,bgc: "#7f3 #fff",sh: "1px 1px 3px gray"}
+						,props:{"focusable":true}
+						,ext_title:"{{main_header_text}}"
+
+// ,ext_menu:[1,2,3,"aaa","bbb"]
+					}
+					,"[[name]]_catcher":{
+						css: {hi: 20, lh: 20, ta: "center", cu: "move"}
+						,props: {hstretchable: [20, 44]}
+						,value:"{{dialog_header}}"
+					}
+			   }
+			}
+
+			,"[[name]]_content":{
+				hgap:5, vgap:5,fsia:12,fsmah:15
+				,brd1:"dotted 1px #cbf" //бордер областей
+				,rnd5:5
+				,hi1:44,hi2:69 //высоты 1ой и 2ой инф.областей
+				,bcc:"#def #fff" //фон/градиент mainarea
+				,bcch:"#eef #eff" //фон/градиент заголовка mainarea
+				,clr1:"#339",clr2:"#393",clr3:"#733"
+				,css: {br: "dotted 1px #ddf", bgc: "#def"}
+				,props: {stretchable: [25, 55, 9, 9]}
+				,ch:{
+					"[[name]]_mainarea":{
+						ch:{
+						"[[name]]_header":{value:"{{dialogheader}}",props:{hstretchable:[6,7]}
+						,css:{all:[,,"[[vgap]]",,,,"[[bcch]]","blue","[[brd1]]","[[fsmah]]"],ro:"[[rnd5]]"}}
+						}
+					,props:{stretchable:["[[vgap]]","[[vgap]]","[[hgap]]","eval{[[pname]].w/3.9-[[hgap]]}"]} //занимает 2/3 пространства слева
+					,css:{br:"[[brd1]]",bgc:"[[bcc]]",ta:"center",ro:"[[rnd5]]"} //center действует для всех элементов контейнера
+					}
+					,"[[name]]_info1":{
+						props:{hstretchable:["eval{[[pname]]_mainarea.w+2*([[hgap]])}", "[[hgap]]"]}
+						,css:{ws:"normal",all:["[[hi1]]",,"[[vgap]]",,,,,"[[clr1]]","[[brd1]]","[[fsia]]"]}
+						,value:"{{accordion_msg_about_1step}}"
+					}
+					,"[[name]]_info2":{
+						replaceby:"[[pname]]_info1.dat"
+						,css:{all:["[[hi2]]",,"eval{ [[vgap]]*2 + [[hi1]] }",,,,,"[[clr2]]",,"[[fsia]]"]}
+						,value:"{{accordion_msg_about_more}}"
+					}
+					,"[[name]]_info3":{
+						css:{co:"[[clr3]]",fs:"[[fsia]]",ws:"normal"}
+						,props:{
+							stretchable:[
+								"eval{[[pname]]_info1.h+[[pname]]_info2.h+[[vgap]]*3}","[[vgap]]"
+								,"eval{[[pname]]_mainarea.w+2*([[hgap]])}","[[hgap]]"
+							]
+						}
+						,value:"{{accordion_msg_about_main}}"
+					}
+				}
+			}
+		  ,"[[name]]_buttons":{
+				rnd:12,hbut:25,wbut0:25,wbut1:99,wgap:13 //высота кнопки и мин. гориз. промежуток, скругления и т.д.
+				,shw1:"1px 1px 7px 1px gray" //тень кнопки в обычном состоянии
+				,shw2:"0 0 7px 3px white"  //тень кнопки в состоянии наведения
+				,brd2:"#7c7" // "рамка" нажатой кнопки
+				,grd1:"#afa #fff" //обычная заливка каждой кнопки
+				,clr1:"#afa" //заливка нажатой кнопки
+				,rndall:9 //скругление всей области кнопок
+// 				,shwall:"0 0 33px 1px #aaa" //тень всей области кнопок
+				,shsel:"inset 0 0 19px 1px #fc0" //тень выделенной клавишами кнопки
+				,btm:17 //отступ снизу (bottom) всей области кнопок
+				,minw:"eval{ ([[wgap]]+[[wbut0]])*2 + ([[wgap]]+[[wbut1]])*3 +[[wgap]] }" //ширина блока кнопок  в области кнопок окна
+				,css: {all:[33,"[[minw]]",,,"[[btm]]"],ro:"[[rndall]]"} //	,sh:"[[shwall]]"}
+				,props: {haligned: true}
+				,keystrokes:{ //область кнопок
+					pars:{
+						active:{css:{sh:"[[shsel]], [[shw1]]"}},unactive:{css:{sh:"[[shw1]]"}}
+						,list:["[[name]]_left","[[name]]_save","[[name]]_reset","[[name]]_cancel","[[name]]_right"]
+					}
+					,keys:{
+						RIGHT:{action:"next"}
+						,LEFT:{action:"prev"}
+						,ENTER:{action:"press"}
+					}
+				}
+				,ch:{
+					"[[name]]_left":{
+						clone:"butsample"
+						,css:{all:[,"[[wbut0]]",,"[[wgap]]px"]}
+						,value:"<"
+					}
+					,"[[name]]_save":{
+						clone:"butsample"
+						,css:{all:[,"[[wbut1]]",,"eval{2*[[wgap]]+[[wbut0]]}"]}
+						,value:"{{save}}"
+					}
+					,"[[name]]_reset":{
+						clone:"butsample"
+						,css:{all:[,"[[wbut1]]",,"eval{3*[[wgap]]+[[wbut0]]+[[wbut1]]}"]}
+						,value:"{{reset}}"
+					}
+					,"[[name]]_cancel":{
+						clone:"butsample"
+						,css:{all:[,"[[wbut1]]",,"eval{4*[[wgap]]+[[wbut0]]+2*[[wbut1]]}"]}
+						,value:"{{cancel}}"
+					}
+					,"[[name]]_right":{
+						clone:"butsample"
+						,css:{all:[,"[[wbut0]]",,"eval{5*[[wgap]]+[[wbut0]]+3*[[wbut1]]}"]}
+						,value:">"
+					}
+				}
+			}
+			,"[[name]]_footer":{
+				css: {bgc: "#fff #aef", all:[15,,,,0]}
+				,props: {hstretchable: true}
+			}
+		}
+	}
+	
+,form1:{ //форма для 1го элемента аккордеона
+	props:{stretchable:true} //вся форма натягивается на 1ю область аккордеона
+	,nitems1:5 //число элементов блока полей регистрации
+	,clr1:"#eea" //цвет блока
+	,brd1:"gray" //рамка
+	,rnd1:3 //скругление блока
+	,h1:25,w1:99 //размеры заголовка (w1) контейнера выбора пользователь/администратор и отступ сверху(t1)
+	,h2:161 //высота 2ой области формы1 (осн.поля)
+	,h3:90 //высота 3ой области формы1 (доп.информация)
+	,t2:"[[hitem]]+[[vgap1]]" //отступ 1го login-поля формы
+	,hitem:17 //высота заголовка поля
+	,wtit1:"[[name]]_main.w/4" //ширина левых заголовков
+	,winp1: "([[name]]_main.w*3/4-2*[[hgap1]])" //ширина области ввода остальных полей -5*[[hgap1]]
+	,winp11:"([[winp1]]-[[wbut1]]-2*[[hgap1]])" //ширина области ввода логина (с кнопкой справа. меньше на ширину кнопки)
+	,wbut1:77 //ширина левой колонки
+	,hgap1:13 //гориз. промежутки
+	,vgap1:6 //промежуток между строками
+	,skip:["hradioblk"]
+	,inputs:["[[name]]_main_login_input","[[name]]_main_input*[[nitems1]]","[[name]]_add_input"]
+
+//***************************************************
+	,hradioblk:{ //блок гориз. радиокнопок
+					nitems:2 //число элементов
+					,indent:"[[name]].w/13" //отступ
+					,witem:"([[name]].w-2*[[indent]])/[[nitems]]" //ширина элемента (пара: радио+текст
+					,sr:"[[name]].h" //размер радиокнопки (WxH == высоте блока
+					,wl:"[[witem]]-[[sr]]-[[hgap1]]" //размер подписи к радиокнопке
+					,css:{ta:"left"}
+					,values:["{{Administrator}}","{{User}}"]
+					,ch:{
+						"[[name]]_radio[[msep]][[nitems]]":{
+							mc:"[[mcount]]"
+							,css:{cu:"pointer"}
+							,props:{css:{le:"eval{ [[indent]] + ( [[mc]] -1) * [[witem]] }"},valigned:true,pressable:true}
+							,tag: "input"
+							,attrs: {name: "[[pname]]_group",checked:"false",type: "radio"}
+						}
+						,"[[name]]_label[[msep]][[nitems]]":{
+							mc:"[[mcount]]"
+							,props:{
+								vstretchable:true
+								,css:{all:[,"[[wl]]",,"eval{[[indent]] + ([[mc]]-1) * [[witem]] + [[sr]]+[[hgap1]] }"]
+									,lh:"eval{[[name]].h}"
+								}
+							,value:"eval{[[pname]].dat.values[ [[mc]] -1 ]}" //[eval{[[mcount]]-1}}
+							}
+						}
+					}
+	}
+
+	,ch:{
+		"[[name]]_selua1":{ //контейнер выбора (пользователь/администратор)
+			css:{all:["[[h1]]",,"[[vgap1]]"]
+			,bgc:"[[clr1]]",br:"[[brd1]]",ro:"[[rnd1]]"}
+			,props:{hstretchable:["[[hgap1]]","eval{[[hgap1]]+2}"]}
+			,ch:{ //заголовок: "Кто Вы?"
+				"[[name]]_header":{
+					css:{ all:["[[h1]]","[[w1]]"],fw:"bold",lh:"[[h1]]"}
+					,value:"{{accordion_select_user_type}}"
+				}
+				,"[[name]]_rbut1":{ //контейнер для блока радиокнопок
+					clone:"hradioblk"
+					,props:{stretchable:[0,0,"[[w1]]",0]}
+				}
+			}
+		}
+		,"[[name]]_main":{ //основной блок полей регистрации (логин/пароль и т.д.)
+			values:["{{accordion_password_title}}","{{accordion_confirmpwd_title}}","{{accordion_email_title}}","{{accordion_firstname_title}}","{{accordion_lastname_title}}"]
+			,css:{all:["[[h2]]",,"eval{[[h1]]+2*[[vgap1]]}"],bgc:"[[clr1]]",br:"[[brd1]]",ro:"[[rnd1]]"}
+			,props:{hstretchable:["[[hgap1]]","eval{[[hgap1]]+2}"],movable:true,resizable:true}
+			,resizing_all:["[[name]]"]
+			,move:{catchid:"[[name]]_header"}
+			,ch:{
+				"[[name]]_header":{ // Заголовок "Информация для входа"
+					ext_title:"{{you_can_move_resize}}"
+					,value:"{{accordion_header_login_info}}"
+					,css:{all:["[[hitem]]"],lh:"[[hitem]]",fw:"bold",brb:"#ca8",bgc:"#eca",cu:"pointer"}
+					,props:{hstretchable:true,focusable:true}
+				}
+				,"[[name]]_login_title":{
+					value:"{{accordion_login_title}}"
+					,css:{all:["[[hitem]]","eval{ [[wtit1]] }","eval{[[t2]]}"]
+					,ta:"right",lh:"eval{[[hitem]]+3}"}
+					,props:{css:{wi:"eval{ [[wtit1]] }"}}
+				}
+				,"[[name]]_login_input":{
+					tag:"input"
+					,css:{all:["[[hitem]]",,"eval{[[t2]]}"]
+					,br:"#aaa",ro:"[[rnd1]]",ta:"left"}
+					,props:{css:{all:[,"eval{[[winp11]]}",,"eval{[[wtit1]]+[[hgap1]]}"]}}
+				}
+				,"[[name]]_login_check":{
+					value:"{{accordion_login_check}}"
+					,props:{pressable:true}
+					,press:{
+						process: {"[[name]]": {css: {bgc:"#7bf"}}}
+						,up:		{"[[name]]": {css: {bgc:"#7bf #fff"}}}
+					}
+					,css:{all:["[[hitem]]","eval{[[wbut1]]}","eval{[[t2]]}",,,"[[hgap1]]"],br:"#aaa",ro:"[[rnd1]]",bgc:"#7bf #fff",ta:"center",cu:"pointer",lh:"eval{[[hitem]]-2}"}
+				}
+				,"[[name]]_title[[msep]][[nitems1]]":{
+					mc:"[[mcount]]"
+					,css:{ta:"right",he:"[[hitem]]",lh:"[[hitem]]"}
+					,props:{
+						css:{all:[,"eval{[[wtit1]]}","eval{ [[t2]] + ([[hitem]]+[[vgap1]])*[[mc]] }"]}
+						,value:"eval{ [[pname]].dat.values[ [[mc]]-1] }"
+					}
+				}
+				,"[[name]]_input[[msep]][[nitems1]]":{
+					mc:"[[mcount]]"
+					,tag:"input"
+					,css:{ro:"[[rnd1]]",ta:"left",he:"[[hitem]]",lh:"[[hitem]]",br:"#aaa"}
+					,props:{css:{all:[,"eval{[[winp1]]}","eval{ [[t2]] + ([[hitem]]+[[vgap1]])*[[mc]] }","eval{[[wtit1]]+[[hgap1]]}"]}}
+				}
+			}
+		}
+		,"[[name]]_add":{ // блок доп. информации
+			css:{all:["[[h3]]"],ro:"[[rnd1]]",bgc:"[[clr1]]",br:"[[brd1]]",cu:"pointer"}
+			,move:{catchid:"[[name]]_header"}
+			,resizing_all:["[[name]]"]
+			,props:{
+				stretchable:["eval{[[pname]]_main.t+[[pname]]_main.h+[[vgap1]]}","[[vgap1]]","[[hgap1]]","eval{[[hgap1]]+2}"]
+				,movable:true,resizable:true
+			}
+			,ch:{
+				"[[name]]_header":{ // Заголовок "Доп.информация"
+					ext_title:"{{you_can_move_resize}}"
+					,value:"{{accordion_title_addinfo}}"
+					,css:{all:["[[hitem]]"],lh:"[[hitem]]",fw:"bold",brb:"#ca8",bgc:"#eca"}
+					,props:{hstretchable:true,focusable:true}
+				}
+				,"[[name]]_input":{ // Область ввода доп. информации"
+					tag:"textarea"
+					,css:{br:"none",resize: "none"}
+					,props:{stretchable:["[[hitem]]",0,0,2]}
+				}
+			}
+		}
+	}
+}
+	
+	
+	
+	
+	
+	
+}
+
+
+
+

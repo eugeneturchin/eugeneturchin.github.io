@@ -1,0 +1,86 @@
+ body:{css:{pa:0,ma:0,of:"hidden",ff: "arial",fs:13}}
+//  ,curtain:{props:{stretchable:true},css:{bgc:"blue",op:33,zi:"[[zindexMax]]",vi:"hidden"}}
+ ,header:{
+	css:{all:[99,,0],bgi:"[[app.imgs.header_bg.src]]"},props:{hstretchable:true}
+	,ch:{
+		center:{
+			value:"{{main_header_text}}"
+			,props:{haligned:true,hstretchable:true}
+			,css:{lh:90,fs:80,ts:"-2px -2px 2px #999, 2px 2px 2px white",co:"#77f",ta:"center"}
+		}
+	}
+}
+ ,leftlogo: {
+	  css:{all:[94,94,3,3],cu:"pointer"
+		  ,zi:"eval{[[zindexMin]]}",ro:47,bgc:"#fae #ffe",sh:"0 0 33px 1px yellow"
+		  ,lh:94,fs:17,ts:"-1px -1px 1px #999, 1px 1px 1px white",co:"#009",ta:"center"
+	  }
+	  ,props:{movable:true,breathable:true,scalable1:true}
+	  ,value:"Logo"
+	  ,ext_title1:"test"
+  }
+
+ ,footer: {css:{all:[21,,,0,0,,"#793","white",,12,21,"center"], po: "fixed"},props:{hstretchable:true},value:"{{copyright}}"}
+   
+ ,mainarea: {
+	 css:{bgs:"25%",bgi:"[[app.imgs.mainarea_bg1.src]]",brt: "dotted 1px #ccf"}
+		,props:{parallaxable:33,stretchable:["[[header.h]]","[[footer.h]]",0,0]}
+  }
+,keyset:{
+	pname:"header"
+	,hb:32,wb:46,gp:7
+	,langs:3 // 3 языка 
+	,css:{all:["eval{[[hb]]+2*[[gp]]}","eval{([[wb]]+[[gp]])*[[langs]]+2*[[gp]]}","[[gp]]",,,"[[gp]]"],ro:9}
+	,props:{movable:true}
+// ,move:{downshare:["selua","selen","selru"]}
+	,downshare:["selua","selen","selru"]
+	,keystrokes:{ //область кнопок
+		pars:{
+			active:	{css:{sh:"inset 0 0 13px 3px yellow"}}
+			,unactive:{css:{sh:"none"}}
+			,list:["selua","selen","selru"]
+		}
+		,keys:{
+			LEFT:{action:"next",type:"keydown"}
+			,RIGHT:{action:"prev",type:"keydown"}
+			,ENTER:{action:"press"}
+		}
+	}
+	,ch:{
+		selru:{
+				h:33,w:46,t:7,r:3
+				,hd:"eval{[[hb]]-[[gp]]/2}",wd:"eval{[[wb]]-[[gp]]}",td:"eval{[[gp]]+[[gp]]/2}"
+				,shup:"0 0 13px 1px gray",op1:100,op2:55
+				,shdown:"0 0 13px 3px yellow"
+				,css:{
+					all:["[[hb]]","[[wb]]","[[gp]]",,,"[[gp]]"]
+					,op:"[[op2]]",ro:3,cu:"pointer",sh:"[[shup]]",bgi:app.ru_ico
+				}
+			,props:{pressable:true,focusable:true}
+			,press:{
+				process:	{"[[name]]":{css:{all:["[[hd]]","[[wd]]","[[td]]",,,"eval{[[gp]]+2}"],sh:"[[shdown]]",op:"[[op1]]"}}}
+				,up:	{"[[name]]":{css:{all:["[[hb]]","[[wb]]","[[gp]]",,,"[[r]]"],sh:"[[shup]]",op:"[[op2]]"}}}
+			}
+			,focus:{over:{"[[name]]":{"css":{sh:"[[shdown]]"}}},out: {"[[name]]":{"css":{sh:"[[shup]]"}}}}
+		}
+		,selua: {
+			clone: "selru.dat"
+			,r:63
+			,css: {all:[,,,,,"[[r]]"],bgi: app.ua_ico}
+			,press:{
+				process:{selru:del,"[[name]]":{css:{all:["[[hd]]","[[wd]]","[[td]]",,,"eval{[[r]]+2}"],sh:"[[shdown]]",op:"[[op1]]"}}}
+				,up: {selru:del,"[[name]]":{css:{all:["[[h]]","[[w]]","[[t]]",,,"[[r]]"],sh:"[[shup]]",op:"[[op2]]"}}}
+			}
+			,focus:{over:{selru:del,"[[name]]":{"css":{sh:"[[shdown]]"}}},out:{selru:del,"[[name]]":{"css":{sh:"[[shup]]"}}}}
+		}
+		,selen: {
+			clone: "selru.dat"
+			,r:120
+			,css: {all:[,,,,,"[[r]]"],bgi: app.usa_ico}
+			,press:{
+				process:{selru:del,"[[name]]":{css:{all:["[[hd]]","[[wd]]","[[td]]",,,"eval{[[r]]+2}"],sh:"[[shdown]]",op:"[[op1]]"}}}
+				,up: {selru:del,"[[name]]":{css:{all:["[[h]]","[[w]]","[[t]]",,,"[[r]]"],sh:"[[shup]]",op:"[[op2]]"}}}
+			}
+			,focus:{over:{selru:del,"[[name]]":{"css":{sh:"[[shdown]]"}}},out:{selru:del,"[[name]]":{"css":{sh:"[[shup]]"}}}}}
+			}
+}

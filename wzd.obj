@@ -1,0 +1,39 @@
+initworld: function(wn){ // wn-имя данного мира (Zero_World_demo)
+	app.prevworld=app.curworld;app.curworld=wn
+	if (! isS(wn)) wn=app.curworld;else app.curworld=wn //имя мира передается либо в контексте, либо  параметром
+	var ow=app.worlds,i
+		,reposlist=[]// список динамических объектов
+		,t=app.world_tools
+		,[o,oc]=t.initarea(.5)
+		,on=t.initnav()
+ 		,og=t.initgrid()
+		,im=ow.imgs.arrow1_left,[h,w]=[im.height/3,im.width/3]
+		t.additem({
+			sticky:1,h:im.height/3,w:im.width/3,t:33,l:33
+			,sh:"0 0 99px 3px yellow, inset 0 0 99px 3px yellow"
+			,css:{bgi:im.src,ro:w}
+			,props:{movable:true,breathable:true,scalable:del}
+			,breath:{over:{"[[name]]":{css:{sh:"[[sh]]"}}},out:{"[[name]]":{css:{sh:""}}}}
+		},"arrow_left").click=function(){ //выход 
+			if (!app.prevworld)app.prevworld="Zero_World"
+			fadeout(o,longdelay,dO)
+			iff(app.worlds[app.prevworld].initworld,app.worlds,"Zero_World")
+		}
+		t.init(wn,ow) //стандартная инициализация мира
+		var mvlst={
+			balloon1: {k0:.2,k:-.5,kh:.3,kv:.2,t:grnd(oc.h/3)} //облака располагаем случайно в первой трети контейнера
+			,balloon2:{k0:.3,k:-.5,kh:.3,kv:.2,t:grnd(oc.h/3)}
+			,balloon3:{k0:.4,k:-.5,kh:.3,kv:.2,t:grnd(oc.h/3)}
+			,cloud10L:{k0:.5,k:-.8,kh:.15,kv:.1,t:grnd(oc.h/9)}
+			,cloud11L:{k0:.6,k:-.8,kh:.15,kv:.1,t:grnd(oc.h/9)}
+			,cloud12L:{k0:.7,k:-.8,kh:.15,kv:.1,t:grnd(oc.h/9)}
+			,cloud13L:{k0:.8,k:-.8,kh:.15,kv:.1,t:grnd(oc.h/9)}
+		}
+	for (i in mvlst) reposlist.push(t.additem(i,mvlst[i]))
+	iterate(t.moving,{drm:333,list:reposlist},19)
+	fadein(o,longdelay); fadein(og,longdelay)
+	if (!app.worlds[wn].state) app.worlds[wn].state=1;else og.click()
+}
+
+
+

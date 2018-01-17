@@ -1,0 +1,31 @@
+version:"1.1"
+,langs:{
+	en:{data:"msgs_en",name:"selen"} //языковые данные|имя объекта (кнопки установки языка)
+	,ru:{data:"msgs_ru",name:"selru"}
+	,ua:{data:"msgs_ua",name:"selua"}
+}
+
+,deflang:"ru" //язык по умолчанию
+
+,preloadImages:{
+	mainarea_bg1:"img/bg1.jpg"
+	,header_bg:"img/skybg.jpg"
+}
+,preloadLarge:{ //не обязательная графика
+	ls1:"img/ls1.jpg"
+}
+,sets:{
+	tmpl: "data/main.json" //вместо curtmpl будет подставлено имя, заданное выше
+	,wids: "data/widgets.json" //вместо curtmpl будет подставлено имя, заданное выше
+	,msgs_en: "data/messages_en.json"
+	,msgs_ru: "data/messages_ru.json"
+	,msgs_ua: "data/messages_ua.json"
+	,msgs_de: "data/messages_de.json"
+	,msgs_fr: "data/messages_fr.json"
+// 	,randomdata: "data/randomdata.json"
+}
+
+,init:function(){	c.log("init!")
+	upd_obj(this,{sets:{msgs_de:del,msgs_fr:del}})
+	return this
+}

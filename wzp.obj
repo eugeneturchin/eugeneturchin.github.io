@@ -1,0 +1,40 @@
+initworld: function(wn){ // wn-имя мира
+ 	app.prevworld=app.curworld;app.curworld=wn //Zero_World_pictured
+	if (!isS(wn)) wn=app.curworld;else app.curworld=wn //имя мира передается либо в контексте, либо  параметром
+	var ow=app.worlds,i
+	,reposlist=[]// список динамических объектов
+	,t=app.world_tools
+	,[o,oc]=t.initarea(2)
+	,on=t.initnav({css:{bgc:gbcO(d.body)}})
+	,og=t.initgrid()
+	,im=ow.imgs.arrow1_left,[h,w]=[im.height,im.width]
+	,mvlst={
+		balloon1:{k:-.5,kh:.3,kv:.2,t:grnd(oc.h/3)} //облака располагаем случайно в первой трети контейнера
+		,balloon2:{k:-.6,kh:.3,kv:.2,t:grnd(oc.h/3)}
+		,balloon3:{k:-.7,kh:.3,kv:.2,t:grnd(oc.h/3)}
+		,cloud_lg1:{k:-.1,kh:.3,kv:.2,t:grnd(oc.h/3)}
+		,cloud_lg2:{k:-.2,kh:.3,kv:.1,t:grnd(oc.h/3)}
+		,Leaves_Falling:{k:-.3,kh:.3,kv:.1,t:grnd(oc.h/3)}
+	}
+	,bgisave=gbiO(d.body);sbiO(d.body,"none")
+	t.additem({
+		sticky:1,h:h/3,w:w/3,t:33,l:33
+		,sh:"0 0 99px 3px yellow, inset 0 0 33px 3px yellow"
+		,css:{bgi:im.src,ro:w}
+		,props:{breathable:true} //scalable:del,
+		,breath:{over:{"[[name]]":{css:{sh:"[[sh]]"}}},out:{"[[name]]":{css:{sh:""}}}}
+	},"arrow_left").click=function(){ //выход 
+		sbiO(d.body,bgisave)
+		if (!app.prevworld)app.prevworld="Zero_World"
+		fadeout(o,longdelay,dO)
+		iff(ow[app.prevworld].initworld,ow,"Zero_World")
+	}
+	t.init(wn,ow) //стандартная инициализация мира
+	for (i in mvlst) reposlist.push(t.additem(i,mvlst[i]))
+	iterate(t.moving,{drm:333,list:reposlist},19)
+	fadein(o,longdelay); fadein(og,longdelay)
+	if (!ow[wn].state) ow[wn].state=1;else og.click()
+}
+
+
+

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+app={
+	sse:{flags:{start:1}},
+	flags:{decor:1},
+	start:()=>{
+		let conncmd=`init_obj("conn",{props:{connectable:true,scalable:true,movable:true,closable:true,resizable:true}})`
+		,cmds=[
+			"init_obj()"
+			,"aaa"
+			,"for (let i in [1,2,3,4,5]) init_obj()"
+			,`for (let i in [1,2,3]) init_obj("test",{})`
+			,`progressbar()`
+			,`progressbar({h:133,bg:"#f77 #ff7",text:"Срочное Сообщение",active:0,fs:33}).sanim()`
+			,`progressbar({h:133,bg:"#f77 #ff7",text:"Сообщение",active:0,fs:33})`
+			,`chat()`
+			,`colorpicker()`
+			,`matrix()`
+			,`matrix({gap:13,m:7,n:5,hi:33,wi:133,props:{movable:true,closable:true},css:{ro:3,sh:"inset 0 0 13px gray",to:123,le:123}},{css:{bgc:"#eaa #eee",ro:3,sh:"0 0 9px 1px #aaa"},value:"eval{app.birds[ [[mcount]]-1 ] }"})`
+			,`win()`
+			,`win({htxt:"Заголовок",ftxt:"строка состояния"})`
+			,`tree(init_obj("test").dat.orig,{css:{wi:199,br:"#aaa"}})`
+			,conncmd
+			,`conn.connector.data="{cmd:'who'}"`
+			,`conn.connector.data="getTime()"`
+			,`app.remote_chat_init_demo()`
+		]
+		,fclick=function(){var o=this;t=gtO(o)
+			t=t.substr(t.indexOf(".")+1)
+			txt2cb(t); o.state=""
+			try{eval(t)}catch(e){c.log("Error:",e.message)}
+			if (!examples.state2) iterate(13,function(cnt){if (cnt>33) {examples.state2=1;setcurobj(examples);return false};scale_obj(examples,-.01,[0,app.ww])})
+		}
+		,flclick=function(){fadeout(this)}
+		,[it,ih,g,wi,fs]=[19,33,7,933,15] //начальная геометрия
+		,init=()=>{
+			if (isH("examples")) {clone(app.names).forEach( (i)=>dO(i) )}
+			dO("examples")
+			align(
+				init_obj("examples",{
+					css:{he:it+2*g+cmds.length*(g+ih),sh:getvar("defshad")+", 0 0 33px gray",wi:wi,vi:"hidden"}
+					,props:{scalable:true,movable:true,minimizable:true,maximizable:true,closable:true,resizable:true}
+					,lst:cmds
+					,it0:it,ih:ih,g:g
+					,shi:"inset 0 0 19px #aaa"
+					,shio:"none"
+					,bgc:"#ddf #ffd"
+					,bgco:"#ffe #eef"
+					,ch:{
+						["item"+app.msep+cmds.length]:{
+							css:{
+								all:["[[ih]]",,"eval{[[it0]]+([[mcount]]-1)*([[ih]]+[[g]])}"]
+								,ro:3,sh:"[[shi]]",bgc:"[[bgc]]",lh:"[[ih]]",pal:9,fs:fs
+								,cu:"pointer"
+							}
+							,props:{hstretchable:["[[g]]","[[ [[g]]+9 ]]"],movable:true,scalable:true,focusable:true}
+							,focus:{over:{"[[name]]":{css:{sh:"[[shio]]",bgc:"[[bgco]]"}}},out:{"[[name]]":{css:{sh:"[[shi]]",bgc:"[[bgc]]"}}}}
+							,value:"[[mcount]]. eval{[[pname]].dat.lst[ [[mcount]]-1 ]}"
+							,func:{click:fclick.toString(),longclick:flclick.toString()}
+						}
+					}
+					,resizing:["item"+app.msep+lkeys(cmds)+"+1"]
+				})
+			)
+c.log("(re)init~")
+			fadein(examples)
+			examples.state2=0
+			examples.close_also=init
+			examples.dblclick=function(){examples.dat.resizing.forEach((n)=>{if (!isV(n)) fadein(n)})}
+			rndset(app.birdsvoc.length).forEach((v,i)=>{app.birds[i]=app.birdsvoc[v]}) //перемешали массив птиц
+		}
+		init();sofO();setsel(examples,'none')
+// ++++++++++++++++++++++++++++++++++++++
+		app.remote_chat_init_demo=function(){ //демонстрация управления удаленным приложением	
+			app.fresult=function(r){var rid
+				if (r.cmd=="who" && r.type=="reply") {
+					for (let i in r.data) if (i!=app.id && r.data[i].name=="empty") {rid=i;break}
+					if (isS(rid)) next(rid) //,r,this)
+					else c.log("\"empty\" application not found. (Re)start it and refresh this page...")
+				}
+			}
+
+			
+
+			function serilfunc(){
+				function sendmsg(msg){
+					var ftsm="demochat_footmsg",oftsm=gO(ftsm)
+					demochat.chatreset()
+					stO(oftsm,"Sending...")
+					demochat.chataddline(msg,"out",app.name)
+					this.value=""
+					send("reply"
+						,{toobj:"demochat",toapp:"$$appid$$",data:msg,name:demochat.pars.infa.info[0][1]}
+						,function(r){
+							if (r!="ok") {stO(oftsm,"Message not delivered");c.log(this,"Message not delivered",this.error)} 
+							else {
+								setTimeout(function(){stO(oftsm,demochat.pars.msgwait)},999)
+								stO(oftsm,"Delivered")
+							}
+						}
+					)
+				}
+				dO("demochat");chat({name:"demochat",infa:{info:[[,"$$name$$"],[,"$$secondname$$"]]}},sendmsg)
+				demochat.onreply=function(r){demochat.chataddline(r.data,"in",r.name)}
+				demochat.chataddline("datatime");demochat.chatshowhist();demochat.chatreset();
+				demochat.chataddline("$$welcometext$$","in",app.name)
+			}
+			function next(rid) {
+				delete app.fresult //чтобы не использовать повторно
+					var cmd1,cmd2
+					,chgar=[
+						["$$name$$","Kelly"],["$$secondname$$","Master"],["$$appid$$",app.id]
+						,["$$welcometext$$","Привет, это окно чата было запущено удаленным приложением с id: <b>"+app.id+"</b>"]
+					]
+					,chgar1=[
+						["$$name$$","Jek"],["$$secondname$$","Slave"],["$$appid$$",rid]
+						,["$$welcometext$$","Привет, это приложение удаленно запустило окно чата в приложении с id: <b>"+rid+"</b>"]
+					]
+					cmd1=cmd2=serilfunc.toString()
+					chgar1.forEach( (i)=>{cmd1=grepl(cmd1,i[0],i[1])})
+					eval(cmd1);serilfunc()
+					
+					chgar.forEach( (i)=>{cmd2=grepl(cmd2,i[0],i[1])})
+					send("msg"
+						,{toapp:rid,init:cmd2}
+						,function(r){if (r!="ok") c.log("Message not delivered. Returned:",r); else {c.log("Message devivered!")}}
+					)
+			}
+			app.connector.data="{cmd:\"who\"}"
+		}
+	}
+	,birdsvoc:["аист", "альбатрос", "баклан", "бекас", "беркут", "вальдшнеп", "воробей", "ворон", "ворона", "выпь", "гагара", "галка", "глухарь", "гоголь", "голубь", "горлица", "грач", "гусь", "дрозд", "дятел", "жаворонок", "журавль", "зимородок", "зяблик", "иволга", "индейка", "канарейка", "клёст", "козодой", "колибри", "коноплянка", "королек", "коростель", "коршун", "кряква", "кукушка", "кулик", "курица", "куропатка", "ласточка", "лебедь", "малиновка", "мухоловка", "неясыть", "нырок", "овсянка", "оляпка", "орел", "павлин", "пеночка", "перепел", "петух", "пигалица", "пингвин", "поползень", "попугай", "пустельга", "рябчик", "сапсан", "свиристель", "синица", "скворец", "славка", "снегирь", "сова", "сойка", "соловей", "сорока", "страус", "стриж", "сыч", "тетерев", "трясогузка", "турухтан", "удод", "утка", "фазан", "филин", "фламинго", "цапля", "цесарка", "чайка", "чечетка", "чиж", "чирок", "щегол", "юрок", "ястреб"]
+	,birds:[]
+}
+
+</script>
+<script src="js/lib.js"></script>

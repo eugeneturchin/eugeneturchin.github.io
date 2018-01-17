@@ -1,0 +1,112 @@
+imagelist: { //обязательные картинки, загружаются в первую очередь
+	Zero_World:"img/kiev_pech_lavra.jpg"
+	,Zero_World_grid: "img/bgrid.png"
+	,bird1: "img/flybird1.gif"
+	,bird2: "img/flybird2.gif"
+	,cloud10: "img/cloud10.png"
+	,cloud11: "img/cloud11.png"
+	,cloud12: "img/cloud12.png"
+	,cloud13: "img/cloud13.png"
+	,bga: "img/44x65_bg1.gif" //анимационный фон для 2х входов.
+	,door2: "img/door2.png"
+
+	,Zero_World_interior:"img/kiev_pech_lavra_in_Palais_grand_salon.jpg" //zwbgi
+	,angel1:"img/angel1.gif"
+	,angel2:"img/angel2.png"
+	,angel3:"img/angel3.png"
+	,angel4:"img/angel4.png"
+	,angel5:"img/angel5.png"
+	,angel6:"img/angel6.gif"
+	,angel7:"img/angel7.gif"
+	,doorout: "img/spacedoor99.png"
+
+	,Zero_World_large:"img/horizon-architecture-skyline-city-skyscraper-urban-655644-pxhere.com.jpeg"
+	,Zero_World_large_grid:"img/bg1.jpg"
+	,cloud10L: "img/cloud10L.png"
+	,cloud11L: "img/cloud11L.png"
+	,cloud12L: "img/cloud12L.png"
+	,cloud13L: "img/cloud13L.png"
+
+	
+	,Zero_World_demo:"img/beach-sea-coast-water-ocean-horizon-681907-pxhere.com.jpeg"
+	,Zero_World_demo_grid:"img/bg1.jpg"
+	,sphere1:"img/sphere99.png"
+	,sphere2:"img/sphere99_2.png"
+	,sphere3:"img/sphere99_3.png"
+
+	
+	,Zero_World_program:"img/beach-sea-ocean-dock-boardwalk-sunlight-704-pxhere.com.jpeg"
+
+	,Zero_World_pictured:		"img/ground.png"
+	,Zero_World_pictured_grid:	"img/bgrid3.png"
+	,arrow1_left:	"img/arrow1_left.png"
+	,Leaves_Falling:	"img/Leaves_Falling.gif"
+	,balloon1:	"img/balloon1.png"
+	,balloon2:	"img/balloon2.png"
+	,balloon3:	"img/balloon3.png"
+	,cloud_lg1: "img/cloud-lg1.png"
+	,cloud_lg2: "img/cloud-lg2.png"
+
+	,bg1: "img/bg1.jpg"
+	,loading:"img/loading.gif"
+}
+,imagelist2: {
+	ls1:"img/ls1.jpg"
+	,me:"img/me.jpg"
+}
+
+,worlds:{ //данные мира
+	Zero_World:"wz.obj"
+	,Zero_World_interior:"wzi.obj"
+	,Zero_World_pictured:"wzp.obj"
+	,Zero_World_large:"wzl.obj"
+	,Zero_World_demo:"wzd.obj"
+	,Zero_World_program:"wzr.obj"
+}
+,data:{
+	demodata:"data/demodata.dat"
+	,samples:"data/samples.dat"
+
+
+}
+,startworld:"Zero_World" //начало
+// ,startworld:"Zero_World_interior" //внутри...
+// ,startworld:"Zero_World_pictured" //начало
+// ,startworld:"Zero_World_large" //начало
+// ,startworld:"Zero_World_demo" //начало
+// ,startworld:"Zero_World_program" //начало
+
+ 
+
+,init: function(){var o=this,opb=progressbar({text:"Loading data and img"}) // запуск progressbar
+
+// 	 	function exiterr(e) { //выход по ошибке
+// 			if (isE(e)) e=e.message
+// 			atO(d.body,"<b>" + e + "</b>",17,"#a33")
+// 			atO(d.body,sp(2)+"Continue not possible<br>",15,"gray")
+// 			opb.close()
+// 		}
+		loadImages(o.imagelist2,function(e){if (isR(e)) o.imgs2="err"; else o.imgs2=e})
+		loadImages(o.imagelist,function(e){if (isR(e)) exiterr(e.message+" (src="+o.src+")"); else { //обязательная часть картинок
+			o.imgs=e
+			sbrO(d.body,"no-repeat");sbpO(d.body,"50% -50%");sbiO(d.body,e.loading.src)
+			loadData(o.data,function(e){ //загрузка данных из списка в секции "data"
+				if (isR(e)) {opb.close();stO(d.body,"");exiterr(e.message)} else {
+					o.data=e
+					loadData(o.worlds,function(e){ //загрузка данных из списка в секции "worlds"
+						if (isR(e)) {opb.close();exiterr(e.message)} else {
+							for (var i in e) o[i]=e[i]
+							opb.show({text:"All data is ready. Preparing world...",delay:timeout}) // запуск progressbar
+							opb.sanim() //анимация progressbar, пока идет формирование мира
+							opb.close()
+							app.worlds=o //;app.curworld=o.startworld
+// c.log(o.startworld,o[o.startworld].initworld)
+							iff(o[o.startworld].initworld,o,o.startworld)}
+						opb.close()
+					})
+				}
+			})
+			}
+		})
+	//	return this	можно возвратить любые данные в программу, которая запустила их загрузку (init может возвратить модифицированные данные)
+}

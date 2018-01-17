@@ -1,0 +1,103 @@
+{
+	"copyright":"&reg; The test example 2018"
+	,"main_header_text":"The Main Header"
+	,"dialog_header":"Registration"
+	,"dialogheader":"The form of dialogue to fill custom data"
+
+	,"accordion_msg_about_1step":"This is the <b>first</b> step in which you fill in the required fields"
+	,"accordion_msg_about_2step":"This is the <b>second</b> step in which you fill in the required fields"
+	,"accordion_msg_about_3step":"This is the <b>third</b> step in which you fill in the required fields"
+
+	,"accordion_msg_about_more":"This field will be shown more information about the registration process"
+	,"accordion_msg_about_main":"This is the main field with details <br> You can use the keys TAB / Alt-TAB to switch fields and keys &UpArrow; and &DownArrow; to select an accordion. <br> \
+For this we need to make the current window by clicking on its title"
+
+	,"acc_header1":"Personal data"
+	,"acc_header2":"Questionnaire"
+	,"acc_header3":"Additional information"
+	,"Administrator":"Administrator"
+	,"User":"User"
+	,"accordion_select_user_type":"Who are you ?"
+	,"accordion_login_check":"Check"
+	,"accordion_password_title":"Password"
+	,"accordion_confirmpwd_title":"Confirm password"
+	,"accordion_title_addinfo":"Additional information"
+//******************************************
+	,"close":"Close"
+	,"save":"Save"
+	,"reset":"Reset"
+	,"cancel":"Cancel"
+	,"item":"Item"
+//*********************************************************
+	,"you_can_move_resize":"You can move this area and change its size"
+	,"you_are_admin_and_you_all_known":"You are an administrator and you know what to do ..."
+	,"you_are_user_and_do_all":"You are user and you must should carefully fill all required fields."
+
+
+
+,"button":"Button"
+
+
+
+
+,"trylater":"Try later"
+,"checking":"Checking..."
+,"error":"Error"
+
+,"bad_browser":"Sorry. You have bad browser (MSIE)"
+
+
+
+,"errloadimgs1":"Loading pictures is hanged"
+
+
+,"dialinfo0":"Click on an item to expand the data"
+,"dialinfo1":"The personal area data"
+,"dialinfo2":"The questionnaire data"
+,"dialinfo3":"The additional information area"
+
+,"accordion_header1":"Group personal data"
+,"accordion_header2":"Group questionnaire data"
+,"accordion_header3":"Additional data group"
+,"accordion_header_select_user_type":"Who are you ?"
+,"accordion_radio_txt11":"administrator"
+,"accordion_radio_txt12":"user"
+
+,"accordion_header_login_info":"Login information"
+,"accordion_header_password":"Password"
+,"accordion_header_confirmpwd":"Confirm password"
+
+,"accordion_login_title":"Login"
+,"accordion_email_title":"Email"
+,"accordion_firstname_title":"First Name"
+,"accordion_lastname_title":"Last Name"
+
+,"accordion_title_addinfo":"Additional information"
+,"accordion_login_check":"Check"
+,"accordion_login_check_title":"Сheck login name availability"
+,"accordion_err_field_empty":"<span style=\"color:#900\">Selected field can not be empty</span>"
+,"you_entered_invalid_character":"<span style=\"color:#900\">You entered invalid character</span>"
+
+,"this_name_can_be_used":"This name can be used"
+,"this_name_is_busy":"<span style=\"color:#900\">This name is busy</span>"
+,"passwords_not_match":"<span style=\"color:#900\">Fields with passwords do not match</span>"
+,"email_field_malformed":"<span style=\"color:#900\">Email field is malformed</span>"
+,"too_short_field":"<span style=\"color:#900\">The field length should not be less than three characters</span>"
+
+
+,"accordion_header21":"An abstract title"
+,"accordion_field21_title":"An abstract field21"
+,"accordion_field22_title":"An abstract field22"
+,"accordion_field23_title":"An abstract field23"
+,"accordion_field21_value":"The information about some abstract field21"
+,"accordion_field22_value":"The information about some abstract field22"
+,"accordion_field23_value":"The information about some abstract field23"
+
+,"accordion_login_value":"Login name"
+,"accordion_password_value":"Password"
+,"accordion_confirmpwd_value":"Confirmed password"
+,"accordion_email_value":"Enter correct Email name as \"aaa@bbb.ccc\""
+,"accordion_firstname_value":"Enter first name"
+,"accordion_lastname_value":"Enter last name"
+
+}

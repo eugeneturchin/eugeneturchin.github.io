@@ -1,0 +1,593 @@
+// try{}catch(e){c.log(e)}
+initworld: function(wn,vardemo){ // wn-имя данного мира, (Zero_World_programm)
+try{
+	if (!app.prevworld || app.prevworld==app.curworld || wn==app.curworld) app.prevworld="Zero_World"; else app.prevworld=app.curworld
+	app.curworld=wn
+	if (!isS(wn)) wn=app.curworld;else app.curworld=wn //имя мира передается либо в контексте, либо  параметром
+	var ow=app.worlds,i,curdemo
+		,ittm=19 //9 //общий интервал для вех анимаций (iterate)
+		,os1,os2,os3
+		,t=app.world_tools
+		,[o,oc]=t.initarea()
+		,on=t.initnav()
+		,dalb={sticky:1,k:.5,t:33,l:33
+			,sh:"0 0 99px 3px yellow, inset 0 0 99px 3px yellow"
+			,k:-.5
+			,css:{ro:ow.imgs.arrow1_left.width/2}
+			,props:{breathable:true}
+			,breath:{over:{"[[name]]":{css:{sh:"[[sh]]"}}},out:{"[[name]]":{css:{sh:""}}}}
+		}
+		,oalb=t.additem(ow.imgs.arrow1_left,dalb,"arrow_left") //стрелка-кнопка для выхода из мира или сброса
+		oalb.click=function(){ //выход
+			if (!app.prevworld) app.prevworld="Zero_World"
+			fadeout(o,longdelay,function(){dO(wn)})
+			dO(this)
+			iff(app.worlds[app.prevworld].initworld,app.worlds,"Zero_World")
+		}
+		oalb.longclick=function(){initbuttons()} //сброс
+		t.init(wn,ow) //стандартная инициализация мира
+		fadein(oc)
+// demoSite();return
+		initbuttons()
+		if (!vardemo) initspheres()
+		var w=on.w/2;iterate(function(cnt){if (on.w<w) return false;scale_obj(on,-.02,[0,on.w])} //уменьшили размер навигатора в 2 раза
+			,function(){iterate(function(cnt){if (cnt>39) return false;scale_obj(oc,-.02,[oc.h/2,oc.w/2])},repospheres,ittm)},ittm  //после завершения уменьшения навигатора уменьшаем размер контейнера мира
+		)
+// return
+	function initspheres() {// генерация 3х сфер
+			var spdat={k:1.3,h:333,w:333,t:2600,l:1300,kmin:1/33,kmax:33,css:{ro:"[[ [[h]]/2 ]]",lh:"[[ [[h]]/2 ]]"}}//шаблон для сферы
+			os1=t.additem("sphere1",clone(spdat))
+			os2=t.additem("sphere2",clone(spdat,{l:2533}))
+			os3=t.additem("sphere3",clone(spdat,{l:3733}))
+	}
+	function repospheres() { // генерация 3х сфер
+// return
+	iterate(it1,it1e,ittm)
+		function	it1(cnt){if (cnt>33) return false;scale_obj(os1,-.03,[-179,369])}
+		function it1e(){iterate(it2,it2e,ittm)}
+		function	it2(cnt){if (cnt>33) return false;scale_obj(os2,-.03,[-179,139])}
+		function it2e(){iterate(it3,it3e,ittm)}
+		function	it3(cnt){if (cnt>33) return false;scale_obj(os3,-.03,[-179,-84])}
+		function	it3e(){sshO(os1,shsel)}
+		var qn=3,shsel="0 0 9px 3px yellow" //qn - количество сфер
+		os1.click=os2.click=os3.click=function(){var o=this;iterate(function(cnt){if (scale_obj(o,-.09)===false || cnt>33) {dO(o);return false}},ittm)}
+	}
+	function initbuttons(){
+		var  bdat={h:93,w:233,z:oc.w+33333
+			,kmin:1/9,kmax:9,sticky:0 //,op:77
+			,k:2
+			,shad0:"0 0 13px 1px gray",shad1:"0 0 77px 0 yellow"
+			,clr0:"#3d3 #ee3"
+			,css:{
+				bgc:"[[clr0]]",br:"#009",fs:17, lh:"[[h]]"
+				,ta:"center"
+				,sh:"[[shad0]]",ts:"-1px -1px 1px #999, 1px 1px 1px white"
+				,ro:9,cu:"pointer"
+			}
+			,props:{pressable:true,focusable:true,closable:true}
+			,focus:{
+				over:{"[[name]]":{css:{sh:"[[shad1]]"}}}
+				,out:{"[[name]]":{css:{sh:"[[shad0]]"}}}
+			}
+			,press:{
+				down:{"[[name]]":{css:{sh:"none",bgc:"#7a7"}}}
+				,up:{"[[name]]":{css:{sh:"[[shad0]]",bgc:"[[clr0]]"}}}
+				,process:{"[[name]]":{css:{sh:"none",bgc:"#ccc #ddd"}}}
+			}
+			,value:"[[txt]]"
+		}
+		,obuts={}
+		,demos={
+			widget_reset:{dat:{t:1213,l:2713,clr0:"#d33 #ee3",sticky:1,value:"Reset & repos screen",k:0,sticky:1},scale:[-2/3.3,[0,0]]}
+
+			,comm_demo:{dat:{t:1444,l:2277,value:"The Communication demo",k:.3}}
+			,demoPuzzle:{dat:{t:1444,l:2633,value:"The Puzzle Game demo",k:.3}}
+			,demoSite:{dat:{t:1444,l:2989,value:"The simple site demo",k:.3}}
+//   
+			,acco_demo:{dat:{t:1799,l:2066,value:"The Accordion demo",z:oc.w},scale:[-.3]}
+			,menu_demo:{dat:{t:1799,l:2633,value:"The Menu demo",z:oc.w},scale:[-.3]}
+			,tabs_demo:{dat:{t:1799,l:3199,value:"The Tabs demo",z:oc.w},scale:[-.3]}
+ 
+			,tree_demo:{dat:{t:2333,l:1766,value:"The Tree demo"},scale:[.1]}
+			,chat_demo:{dat:{t:2333,l:2633,value:"The Chat demo"},scale:[.1]}
+			,color_demo:{dat:{t:2333,l:3499,value:"The color picker demo"},scale:[.1]}
+		}
+		for (i in demos) {
+			obuts[i]=t.additem(clone(bdat,demos[i].dat),i)
+			obuts[i].demoname=i
+			obuts[i].close_also=function(){dO(gO(this.id+"_nav"))}
+			if (isA(demos[i].scale)) scale_obj(obuts[i],demos[i].scale[0],demos[i].scale[1])
+			fadein(obuts[i],longdelay)
+			obuts[i].click=clickbut
+		}
+
+		function clickbut(){var ob=this,i,o
+			ob.firstChild.data="Processing..."
+			curdemo=ob.demoname
+			ow[wn].curdemo=eval(ob.demoname)
+			iff(ow[wn].curdemo)
+		}
+	}
+	function close_demo(){
+		var ob=gO(wn+"_"+curdemo)
+		ob.pressfree()
+		ob.firstChild.data=ob.dat.value
+		c.log(curdemo)
+	}
+	function widget_reset(){dO(wn);ow[wn].initworld(wn,1)}
+	function demoSite(){
+		fadeout(wn,function(){
+			dO(wn)
+ 			iff(ajax,"loaddata","demoSite.js"
+				,function(r) {
+					if (isR(r)) exiterr(r); else r.demoSite(widget_reset)
+			})
+		})
+	}
+	function comm_demo(){
+		var aphorisms=app.worlds.data.demodata.aphorisms
+		,cntmsgs=0 //счетчик переданных сообщений
+		,delays=multia(["1000*[[msep]]4"]) //сгенерировали массив задержек
+		,path,curpath,obut1
+		,rd1,rd2,rd3,rd4 //наборы данных для иниц. 4х "принимальщиков"
+		,orc1,orc2,orc3,orc4 //... соотв., их объекты
+		,osender=win("Sender",{h:299,w:499,htxt:"Oбъект <b>\"[[name]]\"</b> посылает сообщения"
+			,props:{aligned:true}
+			,ch:{"[[nmc]]":{ch:{"[[pname]]_but":{
+				shad1:"3px 3px 17px 1px gray",clr1:"#afa #fff",clr2:"#dfd #dfd"
+				,css: {all:[55,175,,,,,"[[clr1]]",,,,25],ta: "center",cu: "pointer",sh: "[[shad1]]",ro:9,br:"#9c9"}
+				,props: {pressable: true, aligned:true,movable:true}
+				,move: {down: {"[[name]]": {css: {sh: "none",bgc:"[[clr2]]"}}},up: {"[[name]]": {css: {sh: "[[shad1]]",bgc:"[[clr1]]"}}}}
+				,value:"Передать сообщение<br> другим объектам"
+		}}}}})
+		,osft=gO(osender.id+"_footer") //доступ для отображения процесса передачи сообщений
+		,ofmsg1=atO(osft,"Передано сообщений:",13,"#333",null,{"margin-left":"13px","margin-right":"13px","text-shadow":"0 0 3px white"})
+		,ofmsg2=atO(osft,cntmsgs,13,"blue")
+//*************** создаем получателей ***************
+		var rd1={h:233,w:333,t:33,l:33,htxt:"Oбъект <b>\"[[name]]\"</b>"
+		,csh:"#fcc",cshad:"inset 0 0 133px 0 [[csh]]",css:{vi:"hidden"}
+		,ch:{"[[nmc]]":{hg:1,hi:39
+			,ch:{	
+				"[[name]]_inf":{props:{hstretchable:["[[hg]]","[[hg]]"]},css:{all:["[[hi]]"],co:"green",fs:12}}
+				,"[[name]]_txt":{props:{stretchable:["[[ [[hi]]+[[hg]] ]]",3,"[[hg]]","[[hg]]"]},css:{co:"blue",fs:13,ws:"normal"}}
+		}}}}
+		,rd2=clone(rd1,{l:app.ww-rd1.w-rd1.l,csh:"#cfc"}),rd3=clone(rd1,{t:app.hw-rd1.h-rd1.t,csh:"#aef"}),rd4=clone(rd1,{t:app.hw-rd1.h-rd1.t,l:app.ww-rd1.w-rd1.l,csh:"#ffc"})
+		orc1=win(rd1,"Receiver_1");orc2=win(rd2,"Receiver_2");orc3=win(rd3,"Receiver_3");orc4=win(rd4,"Receiver_4")
+		var zi=gziO(app.oscreen),osc=app.oscreen,ooo=[osender,orc1,orc2,orc3,orc4]
+		obut1=gO(osender.id+"_but")
+		path=[orc1.id,orc2.id,orc3.id,orc4.id];curpath=clone(path) //путь передачи сообшения
+//Сообщение последовательно передается получателям по цепочке
+	app.myevent1=new Event("hi1") //событие. Видно глобально
+	function recmsg(os,data){var o,howtxt //,e=os
+		if (os instanceof Event) {howtxt="событие";o=os.data[0];data=os.data[2];os=os.data[1]}else {howtxt="функцию";o=this}
+		var onxt,nxt=curpath.shift()
+		,nxttxt=nxt==null?"Сообщение обошло всех участников":"Следующий претендент:\""+nxt+"\""
+		var clr= "#"+o.dat.cshad.split("#")[1] //:"inset 0 0 133px 0 #cfc"
+			,msg=" : Получено сообшение от <b>\""+os.id+"\"</b> (через "+ howtxt+").<br>"+nxttxt
+		stO(gO(o.id+"_cont_inf"),getTime().substr(0,8)+msg,11,invclr(clr))
+		atO(gO(o.id+"_cont_txt"),data.msg+"<br><br>")
+		myanim(o,function(){
+			iff(data.callback,o)  //Можно не сказу сообщать, а  после всей цепочки
+			if (nxt!=null) {
+				onxt=gO(nxt)
+				if (curpath.length<2) {
+					onxt.dat.emitters[o.id]="app.myevent1"
+					onxt.addEventListener("hi1",recmsg)
+				} else gO(nxt).dat.emitters[o.id]=recmsg
+				o.dat.emitters={}
+				xchgobjs(o,{msg:data.msg,callback:data.callback},[nxt])
+// 				setcurobj(o)
+			} else reset()
+		})
+	}
+//*****************************************
+	function myanim(o,f){
+		iterate(19,
+			function(cnt) {
+				if (++cnt>9) return false
+				scale_obj(o,.01)
+			}
+			,function() {
+				iterate(19,function(cnt){
+					if (++cnt>9) return false
+					scale_obj(o,-.01)
+				},f)
+			}
+		)
+	}
+
+	 obut1.click=function(){
+	try{
+		var cur=curpath.shift(),ocur=gO(cur) //очередной получатель
+		ocur.dat.emitters[osender.id]=recmsg
+		xchgobjs(osender,{
+				msg:typeof aphorisms=="object"?aphorisms[grnd(aphorisms.length)]:"Набор афоризмов не найден. Подключите..."
+				,callback:function(){ // обратная связь
+				stO(ofmsg1,"Передано <b>\""+this.id+"\"</b>",13,"green")
+			}
+		},[cur])
+		hide(ofmsg2)
+		stO(ofmsg1,"Идет передача сообщений...",13,"red")
+	}catch(e){c.log(e)}
+	}
+	function reset(){
+		obut1.pressfree()
+		stO(ofmsg1,"Передано сообщений:",13,"gray")
+		stO(ofmsg2,++cntmsgs);show(ofmsg2)
+		curpath=clone(path)
+	}
+
+	osender.close_also=function(){
+
+		ooo.forEach(function(i){fadeout(i,dO)})
+		setTimeout(function(){fadeout(app.oscreen);close_demo()},comdelay+33)
+// 		return false
+	}
+//***********************************************************************************
+	fadein(app.oscreen)
+	ooo.forEach(function(i){sziO(i,zi+1);fadein(i)})
+}
+
+
+
+	function tabs_demo(){
+		var aphorisms=app.worlds.data.demodata.aphorisms
+		,oo=tabs(["один","два","три","четыре","пять","шесть","семь"]
+		,function(){
+			this.style.whiteSpace="normal"
+			var i=0;while (i++<=333) {
+			atO(this,aphorisms[grnd(aphorisms.length)]+"<br>")} // ,12,gray,"div",{"margin-left":"3px"})}
+		},wn+"_tabsdemo",wn)
+		fadein(oo) //,function(){iterate(ittm,function(cnt){if (cnt++>33) return false; scale_obj(oo,-.01,[oc.t,oc.l])})})
+		oo.close_also=close_demo
+	}
+
+	function menu_demo() {
+		var omenu,otest,msg
+		,h0=199,w0=333,t0=733,l0=733
+		,otxt,otest,oo
+		,menu1=app.worlds.data.demodata.menu1
+		,dat={
+			props:{focusable:true,movable:true,closable:true,resizable:true}
+			,css:{all:[h0,w0,t0,l0,,,"#afa #fee","#009","#7a7",15,32],shadow:"2px 2px 5px 3px #aab",round:"7px"
+				,"text-shadow":"-1px -1px 1px #999, 1px 1px 1px white","text-align":"center",cursor:"pointer"
+			}
+			,focus:{
+				over:{"[[name]]":{css:{shadow:"0 0 15px 3px #ff7"}}}
+				,out:{"[[name]]":{css:{shadow:"2px 2px 5px 3px #aab"}}}
+			}
+			,value:
+				"<u><b>Контекстное меню</u></b><br>"
+				+"Клик правой кнопкой: <b>Быстрое меню</b><br>"
+				+"Клик левой кнопкой: <b>Меню по кликам</b><hr>"
+		}
+		oo=t.addobj("menudemo",dat) //,{h:666,w:555,t:733,l:733,z1:oc.w+9000}) {css:{bgc:"gray"}
+		function selectItem(r){
+			msg="<br>"+(isO(r[2].dat.menudat)?"Подменю":"Элемент")+" \""+r[2].dat.value+"\""
+			stO(otxt,msg)
+		}
+		otxt=atO(oo,"")
+		oo.click=function(){
+			oo.state=""
+			if (typeof testmenu=="object") return
+			omenu=menu(menu1,selectItem,"testmenu","Демонстрация Menu",{overout:"no"});oo.state=""
+			omenu.sellstitem(1)
+		}
+		oo.rclick=function(){
+// 			if (isH(omenu)) dO(omenu)
+			if (typeof testmenu=="object") return
+			omenu=menu(menu1,selectItem,"testmenu","Демонстрация Menu",{overout:"yes"})
+			omenu.sellstitem(2)
+			return false
+		}
+		oo.close_also=function(){
+			dO(oo.id+"_nav")
+			if(isH(omenu)) omenu.close()
+			close_demo()
+		}
+// ot.before_reset=function(){c.log("before_reset");return false}
+// iterate(ittm,function(cnt){if (cnt++>33) return false; scale_obj(oo,-.01,[oc.t,oc.l])})
+	}
+	
+	function tree_demo(){
+	try{
+		var oo=t.addwin("windemo",{htxt:"test tree widget",ftxt:"The sample of Tree widget demo",h:666,w:555,t:-oc.t,l:o.w/2-333-oc.l} //z1:oc.w+9000
+			,{kmin:1/13,kmax:13,props:{movable:true,scalable:true},css:{bgi:ow.imgs.bg1.src,all:[999]}})
+		var owc=gO(oo.dat.name+"_cont"),owcc=gO(owc.id+"_container")
+		,ot=tree(app.worlds.data.samples.sample,"Root",wn+"_treedemo",{pname:owcc.id,css:{bgc:"#afa"},props:{movable:true,scalable:true}}
+			,function(d){c.log(d[0],":",d[1]);this.pressfree()}
+			,function(p,state){c.log((state?"open":"close"),"data:",p[0],p[1]),o.pressfree();return false}
+		)
+//         Zero_World_program_treedemo
+        sshO(ot,"0 0 33px #aaa") // 0 #aaa")
+		ot.click=function(){stretch(ot);ot.state=""}
+		gO(oo.dat.name+"_header").dblclick=oo.dblclick
+		ot.before_reset=function(){return false} //reset_obj надо доработать с учетом 3х мерности. Возврат false блокирует его работу
+		oo.close_also=function(){dO(oo.id+"_nav");close_demo()}
+		fadein(oo,function(){iterate(ittm,function(cnt){if (cnt++>33) return false; scale_obj(oo,-.01)})})
+	}catch(e){c.log(e)}
+	}
+
+	function chat_demo(){
+		var ochat=chat("chatdemo"
+		,function(msg) { //enter
+			setTimeout(function(){ochat.animTextStart("Мне печатают...")},1234)
+			setTimeout(function(){ochat.chataddline(aphorisms[grnd(aphorisms.length)],"in","eugene");ochat.animTextStop()},3333)
+			return true
+		});sziO(ochat,zindexMax+1)
+		,aphorisms=app.worlds.data.demodata.aphorisms
+		ochat.pars.infa.avatar=app.worlds.data.demodata.chatavatar0
+		ochat.chatreset()
+//строка в чате - это массив: [0] - тип строки (0-вх.сообщение, 1-вых.сообщение, 2 простой текст, 3-html-объект)
+// заполним случайным текстом
+		var i=0;while (i++<=ochat.pars.hist.maxline) {var ntype=grnd(4) //сгенерировали случайные строки
+		if (ntype==0) ochat.chataddline(aphorisms[grnd(aphorisms.length)],"in","eugene")
+		else if (ntype==1) ochat.chataddline(aphorisms[grnd(aphorisms.length)],"out")
+		else if (ntype==2) ochat.chataddline("datatime")
+		else ochat.chataddline("Просто текст")
+// 		if (ntype<=1) ochat.lines[i]=[ntype,getTime().substr(0,8),"eugene",aphorisms[grnd(aphorisms.length)]];else ochat.lines[i]=[ntype,"Просто текст"]
+	}
+	ochat.chataddline("Самая последняя строка",{fs:11,co:"red"})
+	ochat.chataddline("Самая-cамая последняя строка",{fs:12,co:"green"})
+	ochat.chataddline("ну и еще что-то совсем маленьккое",{fs:7,co:"blue"})
+	ochat.close_also=close_demo
+}
+// *****************************************************
+	function color_demo(){
+		var oo=t.addwin("colorPickerDemo",{htxt:"Test of colorpicker widget",ftxt:"The sample of colorpicker widget demo",h:666,w:555,t:733,l:733,z1:oc.w+9000})
+// 			,{kmin:1/3,kmax:13,props:{movable:true,scalable:true},css:{he:999}})
+		,owc=gO(oo.dat.name+"_cont"),owf=gO(oo.dat.name+"_footer") //,owcc=gO(owc.id+"_container")
+		,ocp=colorpicker(function(clr){stO(owf,"You are selected: "+ clr,13)},function(c,ic){sbcO(owc,c);sfcO(ot,ic)})
+		sziO(ocp,zindexMax+1)
+		ocp.close_also=oo.close_also=function(){
+			dO(oo.id+"_nav");close_demo()
+			if (isH(oo)) fadeout(oo,dO)
+			if (isH(ocp)) fadeout(ocp,dO)
+		}
+		iterate(ittm,function(cnt){if (cnt++>33) return false; scale_obj(oo,-.01)})
+	}
+
+	function acco_demo(){
+		var oac=accordion({props:{movable:true,closable:true,resizable:true},css:{bgc:"#ffa #aff",ro:7,sh:"0 0 19px 2px #aaa"},t0:19})
+		align(oac)
+		oac.close_also=close_demo
+	}
+function demoPuzzle(){
+	setsel(d.body,"none")
+	var m=3,n=4  // n - cols, m - rows
+	,ar=[],k,items,o,i,j,om
+	,tm,cntrdy //счетчик сначала завершенных анимаций перемешанных кусков,потом кол-во кусков на правильных местах
+	,bh=33,hg=7,vg=7 //высота блока кнопок; гориз. и вертик. промежутки
+	,shsel="inset 0 0 19px 1px yellow" //тень активной кнопки 
+	,shou="0 -1px 3px 0 #7a7"
+	,dbr={css:{
+			all:[133,133,-139],bgc:"#aad #ffe",fs:17,lh:133
+			,zi:2,sh:"0 0 33px 0 yellow",ro:133/2,op:77,ta:"center",cu:"pointer"
+			,ts:"-1px -1px 1px #999, 1px 1px 1px white"
+		},value:"Bravissimo!",props:{pressable:true,haligned:true,breathable:true}
+	}
+	,defuri="img/ls1.jpg"
+	,dbut={ //данные для кнопки
+		h:bh-vg,w:69,t:vg/2,l:0,shad1:"1px 1px 7px 0 gray",shad2:"0 0 9px 0 yellow",bc1:"#eaa #fff"
+		,ts:"-1px -1px 1px #999, 1px 1px 1px white"
+		,css:{all:["[[h]]","[[w]]","[[t]]","[[l]]"],lh:"[[h]]",bgc:"[[bc1]]",fs:17,ta:"center",ro:5,sh:"[[shad1]]",ts:"[[ts]]",cu:"pointer"}
+		,props:{pressable:true,focusable:true}
+		,focus:{over:{"[[name]]":{css:{sh:"[[shad2]]"}}},out:{"[[name]]":{css:{sh:"[[shad1]]"}}}}
+		,press:{down:{"[[name]]":{css:{sh:"none",bgc:"#ccc"}}},up:{"[[name]]":{css:{sh:"[[shad1]]",bgc:"[[bc1]]"}}}}
+		,value:"Start"
+	}
+	,uritxt="Enter URI of image and press \"Start\" button"
+	,owc=win("wcont",{htxt:"The Puzzle Game",props:{keypressable:true}
+			,keystrokes:{
+				pars:{active:{css:{sh:shsel}},unactive:{css:{sh:shou}},list:["start_but","reset_but","uri_area"]}
+				,keys:{
+					LEFT:{action:"prev",type:"keydown"}
+					,RIGHT:{action:"next",type:"keydown"}
+					,ENTER:{func:"keyenter"}
+				}
+			}
+	})
+	,cn=owc.id+"_cont",ocn=gO(cn)
+	,ba=init_obj("buts",cn,{
+		hg:hg,vg:vg,bh:bh
+		,css:{all:[bh,,vg]},props:{hstretchable:[hg,hg]}
+		,ch:{
+			start_but:clone(dbut)
+			,reset_but:clone(dbut,{l:dbut.l+dbut.w+hg,value:"Reset"})
+			,uri_area:{tag:"input",css:{br:"gray",he:dbut.h,to:2,fs:17,co:"gray"},attrs:{value:uritxt},props:{hstretchable:[dbut.l+2*(dbut.w+hg),hg]}}
+		}
+	})
+	,obr=init_obj(dbr,"Bravissimo_but",cn)
+	sziO(owc,zindexMax+1)
+	setcurobj(owc)
+	owc.save.errors=[]
+// 	owc.keyarrow=function(r){c.log(r[1].pars.list[0])
+	owc.keyenter=function(r){
+		var op=r[1].pars.list[0]
+		c.log(op)
+		if (op=="reset_but") reset_but.click()
+		else if (op=="start_but" && isH(om)) start_but.click()
+		else if (op=="uri_area") {
+			if (fmt(uri_area.value)=="") c.log('uri_area empty')
+			if (fmt(uri_area.value)=="") uri_area.onblur(uri_area); else reset_but.click()
+// 				uri_area.disabled=false
+// 			uri_area.onfocus(uri_area)
+// 			uri_area.focus()
+// 			return false
+		}
+	
+// 		if (gtO(start_but)=="Load" && fmt(uri_area.value)!="") reset_but.click()
+	}
+	owc.after_resize=function(){
+		if (gtO(reset_but)=="Load") return 
+		var hw
+		init_puzzle()
+		hw=om.t+om.h+vg+owc.dat.hh+owc.dat.hf;
+		if (owc.h>hw) {ssO(owc,owc.h=hw);
+			ssO(ocn,ocn.h=om.t+om.h+vg)}
+	}
+// 	uri_area.onkeypress=function(e){if (e.key=="Enter") {
+// 		reset_but.click()
+// 	}}
+	uri_area.onblur=function(o) {if (isE(o)) o=o.target;sfcO(o,"gray");if (fmt(o.value)=="") {o.value=fmt(uritxt);o.blur()}}
+	uri_area.onfocus=function(o){if (isE(o)) o=o.target;o.focus();sfcO(o,"black");if (fmt(o.value)==fmt(uritxt)) o.value=""}
+	obr.click=function() {
+		animate(obr,"top",-ocn.h/2+obr.t0
+			,function(){ //Bravissimo message!
+				obr.pressfree();start_but.pressfree()
+				sopO(start_but,100);start_but.style.cursor="pointer"
+			}
+		)
+	}
+	reset_but.click=function(e){
+		if (gtO(reset_but)=="Reset") {
+			sopO(reset_but,100);start_but.style.cursor="pointer"
+			stO(reset_but,"Load")
+			uri_area.disabled=false;sfcO(uri_area,"black");uri_area.value=""
+			uri_area.focus()
+			sopO(start_but,33);start_but.style.cursor="default"
+			clearom()
+			reset_but.pressfree()
+			return false
+		} else if (gtO(reset_but)=="Load") {
+			var v=fmt(uri_area.value)
+			if (v!=uritxt && v!="") {
+				stO(reset_but,"Loading...",15)
+				sopO(reset_but,69)
+				reset_but.style.cursor="default"
+ 				loadimg(v)
+				return
+			}
+		} else {
+			init_puzzle()
+			reset_but.state=""
+			reset_but.pressfree();stO(start_but,"Start")
+		}
+	}
+	start_but.click=function(){
+		cntrdy=0 
+		ar=rndset(n*m) //массив случайных чисел
+		for (i=0;i<items.length;i++) {//обход порезанных частей
+				o=gO(items[i])
+				var [t,l]=gpO(gO(items[ar[i]])) //[t,l]=gpO(gO(items[i]))
+			acO(o,ocn) //вытащили в <body> и положили над контейнером; далее, задача - выбрать случайное место из незанятых.
+			stO(o,i+1)
+			animate(o,"top" ,om.t+t-o.t,123+grnd(777),endanim)
+			animate(o,"left",om.l+l-o.l+hg+om.w,123+grnd(777),endanim)
+		}
+		function endanim(){
+			if (++cntrdy<n*m*2) return
+				for (i=0;i<items.length;i++) {
+					o=gO(items[i])
+					o.dat.props.movable=true
+					sshO(o, "0 0 19px 0px #ffa")
+					stO(o,i+1)
+				}
+// start_but.pressfree();stO(start_but,"Start")
+				sopO(start_but,33);start_but.style.cursor="default"
+				cntrdy=0
+		}
+	}
+	function help(e) {var o=this,n=0
+		function end(){if (n==0) n++; else o.after_move.call(o)}
+// 		acO(o,om)
+		animate(o,"top",o.t0-o.t+om.t,null,end)
+		animate(o,"left",o.l0-o.l+om.l,null,end)
+	}
+
+	function aftmv(e){var o=this,minh=19,minw=19
+		,i=o.dat.mcount-1
+		,t0=gint(i/n)*o.h,l0=i%n*o.w
+		,dt=abs(t0-o.t+om.t),dl=abs(l0-o.l+om.l)
+		if (dt<minh && dl<minw) {
+			acO(o,om);poO(o,o.t=o.t0,o.l=o.l0)
+			o.dat.props.movable=false
+			css(o,{shadow:"none"})
+			stO(o,"")
+			if(++cntrdy==n*m) {
+				animate(obr,"top",ocn.h/2-obr.t0,function(){
+					animate(obr,"top",-obr.h/2,133,function(){
+						animate(obr,"top",obr.h/4,99,function(){
+							animate(obr,"top",-obr.h/8,99,function(){
+								animate(obr,"top",obr.h/16,99,function(){
+
+
+								})
+				}) }) }) })
+			}
+		}
+	}
+loadimg(defuri)
+uri_area.disabled=true
+owc.close_also=close_demo
+sopO(owc,100)
+// ==============================================================
+function loadimg(uri){
+	clearom()
+	if (!uri) uri=cururi
+	loadimage(uri,function(e) {var o=this
+		if (e.type=="error") {
+			owc.save.errors.push(
+				atO(ocn,"<br><br><br>Bad URI: \""+uri+"\"",17,"red")
+				,atO(ocn,"<br>Image not loaded.",15,"gray")
+			)
+			stO(reset_but,"Load")
+			sopO(reset_but,100)
+			reset_but.style.cursor="pointer"
+			uri_area.focus()
+			reset_but.pressfree()
+			return
+		}
+		owc.cururi=uri
+		owc.curimg=o
+		init_puzzle()
+		stO(reset_but,"Reset")
+		sopO(reset_but,100)
+		uri_area.disabled=true //;sfcO(uri_area,"gray")
+		reset_but.pressfree()
+	})
+}
+function clearom(){
+	for (i in owc.save.errors) dO(owc.save.errors.pop())
+	if (isH(om)) {
+		items=keys(om.dat.children); for (i=0;i<items.length;i++) dO(items[i])
+		for (i in om.dat.ch) dO(gO(i))
+		dO(om)
+	}
+}
+function init_puzzle(){
+	clearom()
+	obr.pressfree();start_but.pressfree()
+	sopO(start_but,100);start_but.style.cursor="pointer"
+	
+	var o=owc.curimg
+	,w=ocn.w/2-hg*3/2,h=o.height/o.width*w
+	om=matrix(
+		{pname:cn,name:"puzzle"
+		,gap:0,m:m,n:n,hi:h/m,wi:w/n,css:{to:2*vg+bh,le:hg,bgc:"#efd",sh:"0 0 9px 0px #aaa"}}
+		,{value:getvar("del"),props:{movable:false}}
+	)
+	items=keys(om.dat.children)
+	for (var i=0;i<items.length;i++) { //обход порезанных частей
+		o=gO(items[i])
+		o.dblclick=help
+		o.after_move=aftmv
+		setico(o,{
+			u:owc.curimg.src // URI картинки
+			,h:h,w:w //размер картинки (Этот размер желательно сделать кратным размерам места, если не указан, то h=h1*m, w=w1*n)
+			,n:n,m:m // размерность полотна с иконками: число колонок и рядов
+			,c:i%n,r:gint(i/n) //позиция выбираемой иконки (cols/rows)
+		})
+	}
+}
+}
+
+
+	
+}catch(e){c.log(e)}
+
+
+}
+
+
+

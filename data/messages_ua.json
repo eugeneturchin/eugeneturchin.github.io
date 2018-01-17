@@ -1,0 +1,96 @@
+{
+	"copyright":"&reg; Тестовий приклад 2018"
+	,"main_header_text":"Тестовий сайт" // заголовок сайту
+	,"dialog_header":"Вікно реєстрації"
+	,"dialogheader":"Форма діалогу для заповнення персональних даних"
+
+	,"accordion_msg_about_1step":"Це <b> перший </ b> крок, на якому ви заповнюєте необхідні поля"
+	,"accordion_msg_about_2step":"Це <b> другий </ b> крок, на якому ви заповнюєте необхідні поля"
+	,"accordion_msg_about_3step":"Це <b> третій </ b> крок, на якому ви заповнюєте необхідні поля"
+
+	,"accordion_msg_about_more":"У цьому полі буде проявлятися додаткова інформація про процес реєстрації"
+	,"accordion_msg_about_main":"Це основне поле з докладною інформацією <br> Ви можете використовувати клавіші TAB / Alt-TAB для перемикання областей і клавіші &UpArrow; і &DownArrow; для вибору елемента акордеона. <br> \
+Для цього треба зробити вікно поточним, клікнувши на його заголовку "
+
+	,"acc_header1":"Персональні дані"
+	,"acc_header2":"Анкета"
+	,"acc_header3":"Додаткова інформація"
+	,"Administrator":"Адміністратор"
+	,"User":"Користувач"
+	,"accordion_select_user_type":"Хто Ви?"
+	,"accordion_login_check":"Перевірити"
+	,"accordion_password_title":"Пароль"
+	,"accordion_confirmpwd_title":"Підтвердження пароля"
+	,"accordion_title_addinfo":"Додаткова інформація"
+//*********************************************************
+	,"close":"Закрити"
+	,"reset":"Скидання"
+	,"save":"Зберегти"
+	,"cancel":"Скасування"
+	,"item":"Елемент"
+//*********************************************************
+	,"you_can_move_resize":"Ви можете переміщати цю область і змінювати її розмір"
+	,"you_are_admin_and_you_all_known":"Ви адміністратор і знаєте що робити."
+	,"you_are_user_and_do_all":"Ви користувач і повинні уважно заповнити всі необхідні поля."
+
+	,"button":"Кнопка"
+	,"trylater":"Спробуйте пізніше"
+	,"checking":"Перевіряємо ..."
+	,"error":"Помилка"
+
+	,"bad_browser":[
+	"На жаль у Вас MSIE. <br> Немає принципових проблем з кросбраузерністю, але поки немає можливості забезпечити повну функціональність, тому, вибачте, поки робота заблокована. <br> Використовуйте будь-який інший браузер ... <br>"
+	,"(Просто поки немає можливості протестувати більш пізні браузери, ніж для windowsXP ..)"
+]
+,"errloadimgs1":"Завантаження картинок зависла"
+
+,"dialinfo0":"Клацніть по елементу для розширення даних"
+,"dialinfo1":"Це область персональних даних"
+,"dialinfo2":"Це область анкети"
+,"dialinfo3":"Область додаткових даних"
+
+,"accordion_header1":"Група персональних даних"
+,"accordion_header2":"Група анкетних даних"
+,"accordion_header3":"Група додаткових даних"
+
+,"accordion_header_select_user_type":"Хто Ви?"
+,"accordion_radio_txt11":"Адміністратор"
+,"accordion_radio_txt12":"Користувач"
+
+,"accordion_header_login_info":"Інформація для входу"
+,"accordion_header_password":"Пароль"
+,"accordion_header_confirmpwd":"Підтвердження пароля"
+
+,"accordion_login_title":"Логін"
+,"accordion_email_title":"Пошта"
+,"accordion_firstname_title":"Ваше ім'я"
+,"accordion_lastname_title":"Прізвище"
+
+,"accordion_title_addinfo":"Додаткова інформація"
+,"accordion_login_check":"Перевірити"
+,"accordion_login_check_title":"Перевірити доступність зазначеного імені"
+,"accordion_err_field_empty":"<span style=\"color:#900\">Зазначене поле не може бути порожнім</span>"
+,"you_entered_invalid_character": "<span style=\"color:#900\">Ви ввели неприпустимий символ</span>"
+,"this_name_can_be_used":"Це ім'я можна використовувати"
+,"this_name_is_busy":"<span style=\"color:#900\">Це ім'я зайнято</span>"
+,"passwords_not_match":"<span style=\"color:#900\">Поля з паролями не збігаються</span>"
+,"email_field_malformed":"<span style=\"color:#900\">Поле email має неправильний формат</span>"
+,"too_short_field":"<span style=\"color:#900\">Довжина поля не повинна бути менше 3 символів</span>"
+
+
+,"accordion_header21":"Довільний заголовок"
+,"accordion_field21_title":"Довільний поле 21"
+,"accordion_field22_title":"Довільний поле 22"
+,"accordion_field23_title":"Довільний поле 23"
+,"accordion_field21_value":"Інформація про якийсь довільному поле field21"
+,"accordion_field22_value":"Інформація про якийсь довільному поле field22"
+,"accordion_field23_value":"Інформація про якийсь довільному поле field23"
+
+,"accordion_login_value":"Ім'я входу в систему (Login name)"
+,"accordion_password_value":"Пароль"
+,"accordion_confirmpwd_value":"Підтвердження пароля"
+,"accordion_email_value":"Введіть коректну адресу електронної пошти в форматі\"aaa@bbb.ccc\""
+,"accordion_firstname_value":"Введіть Ваше ім'я"
+,"accordion_lastname_value":"Введіть Вашу Прізвище"
+
+}

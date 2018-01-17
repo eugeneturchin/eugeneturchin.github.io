@@ -1,0 +1,36 @@
+doorout:{
+	bgc:"#ffa",sticky:1
+	,props:{scalable:del,movable:del}
+	,focus:{
+		over:{"[[name]]":{css:{sh:"0 0 99px 9px [[bgc]], inset 0 0 33px 3px [[bgc]]"}}}
+		,out:{"[[name]]":{css:{sh:"none"}}}
+	}
+}
+,initworld: function(wn){   // wn-имя данного мира (Zero_World_interior)
+	 	app.prevworld=app.curworld;app.curworld=wn
+		var ow=app.worlds,i
+		,reposlist=[]// список динамических объектов
+		,t=app.world_tools
+		,[o,oc]=t.initarea()
+		,on=t.initnav()
+		,odo=t.additem("doorout",clone(ow[wn].doorout,{t:1099,l:33}))
+		odo.click=function(){
+			fadeout(o,dO,longdelay)
+			app.worlds.Zero_World.initworld("Zero_World")
+		}
+
+	var mvlst={
+		 angel1:{k:-.5,kh:.2,kv:.3,k0:3}
+		,angel2:{k:-.5,kh:.4,kv:.1,k0:.7}
+		,angel3:{k:-.5,kh:.3,kv:.2,k0:.3}
+		,angel4:{k:-.5,kh:.2,kv:.2,kmin:1/33}
+		,angel5:{k:-.5,kh:.33,kv:.25,k0:2}
+		,angel6:{k:-.2,kh:.7,kv:.5,k0:.7}
+		,angel7:{k1:-.7,kh:.5,kv:.1,k0:4}
+	}
+	for (i in mvlst) reposlist.push(t.additem(i,mvlst[i]))
+	iterate(t.moving,{drm:333,list:reposlist},19)
+	t.init(wn,ow) //стандартная инициализация
+	fadein(o,longdelay)
+	iterate(33,oc,function(cnt){if (cnt>33) return false;scale_obj(oc,.01)})
+}

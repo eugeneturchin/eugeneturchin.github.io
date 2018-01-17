@@ -1,0 +1,84 @@
+door1:{
+	sticky:1,bgi:"none"
+	,props:{scalable:del,movable:del}
+	,css:{op:33}
+	,focus:{over:{"[[name]]":{css:{bgi:"[[bgo]]",sh:"0 0 99px 33px yellow"}}},out:{"[[name]]":{css:{bgi:"none",sh:""}}}}
+}
+,door2:{
+	c1:"#555",c2:"#ff0",sh:"3px 3px 13px 3px "
+	,sticky:1
+	,h:64,w:54,t:1122,l:490
+	,css:{sh:"[[sh]][[c1]]"}
+	,props:{scalable:del,movable:del}
+	,focus:{over:{"[[name]]":{css:{sh:"[[sh]][[c2]]"}}},out:{"[[name]]":{css:{sh:"[[sh]][[c1]]"}}}}
+}
+// *****************************************************try{}catch(e){c.log(e)}
+,initworld: function(wn) { // wn-имя данного мира (Zero_World)
+	app.prevworld=app.curworld;app.curworld=wn
+	var ow=app.worlds,i
+	,reposlist=[]// список динамических объектов
+	,t=app.world_tools
+	,[o,oc]=t.initarea()
+	,on=t.initnav()
+	,og=t.initgrid()
+	,odi1=t.additem("doorin",clone(ow[wn].door1,{ext_title:"Вход внутрь Киево-Печерской Лавры",bgo:ow.imgs.bga.src ,h:65,w:44,t:1092,l:756,css:{ro:[22,22,0,0]}})) //2 двери без фона
+	,odi2=t.additem("doorin1",clone(ow[wn].door1,{attrs:{title:"Pictured World"},bgo:ow.imgs.bga.src,h:80,w:33,t:835 ,l:761,css:{ro:[17,17,0,0]}}))
+	,odl=t.additem("door2",clone(ow[wn].door2,{attrs:{title:"Large World"},t:1122,l:490})) //,"door2")
+	,odr=t.additem("door2",clone(ow[wn].door2,{attrs:{title:"Program World"},t:1222,l:1460,name:"door3"}))
+	,odd=t.additem("door2",clone(ow[wn].door2,{attrs:{title:"Demo World"},t:1092, l:855,name:"door4"}))
+
+	odi1.click=function(){ //Вход внутрь собора через дрерь
+		fadeout(o,longdelay,dO)
+		iff(app.worlds.Zero_World_interior.initworld,app.worlds,"Zero_World_interior")
+	}
+	odi2.click=function(){//Вход в нарисованный мир
+		fadeout(o,longdelay,dO)
+		iff(app.worlds.Zero_World_pictured.initworld,app.worlds,"Zero_World_pictured")
+	}
+	odl.click=function(){//Вход в большой мир
+		fadeout(o,longdelay,dO)
+		iff(app.worlds.Zero_World_large.initworld,app.worlds,"Zero_World_large")
+	}
+	odr.click=function(){//Вход в программный мир
+		fadeout(o,longdelay,dO)
+		iff(app.worlds.Zero_World_program.initworld,app.worlds,"Zero_World_program")
+	}
+	odd.click=function(){//Вход в демонстрационный мир
+		fadeout(o,longdelay,dO)
+		iff(app.worlds.Zero_World_demo.initworld,app.worlds,"Zero_World_demo")
+	}
+	t.init(wn,ow) //стандартная инициализация мира
+	var mvlst={
+		cloud10:{k0:5,k:1,kh:.3,kv:.2,t:grnd(oc.h/3)} //облака располагаем случайно в первой трети контейнера
+		,cloud11:{k0:4,k:2,kh:.3,kv:.2,t:grnd(oc.h/3)}
+		,cloud12:{k0:1.5,k:3,kh:.3,kv:.2,t:grnd(oc.h/3)}
+		,cloud13:{k0:1,k:4,kh:.3,kv:.2,t:grnd(oc.h/3)}
+		,bird0:{k0:.5,k:-.5,w:99,kh:.3,kv:.2,bgi:"bird1"}
+		,bird1:{k0:.1,k:-.6,kh:.3,kv:.2}//дубликаты допустимы!
+		,bird2:{k0:.3,k:-.7,kh:.3,kv:.2}
+	}
+	for (i in mvlst) reposlist.push(t.additem(i,mvlst[i]))
+	iterate(t.moving,{drm:333,list:reposlist},19)
+	fadein(o,longdelay); fadein(og,longdelay)
+	if (!app.worlds[wn].state) app.worlds[wn].state=1;else og.click()
+	
+// ######################
+	var txt="",aphorisms=app.worlds.data.demodata.aphorisms
+	,n=5;while (n>0) {n--;txt+="<br><br>"+aphorisms[grnd(aphorisms.length)]}
+	var owin=t.addwin("windemo",{htxt:"The sample of window",ftxt:"non-graphical object"},{props:{movable:true,scalable:true},css:{bgi:ow.imgs2.ls1.src}})
+	,ooo1=t.addobj("obj1",{sticky:0,css:{op:77,bgi:ow.imgs2.me.src,all:[199,199,oc.h,oc.w],ro:199/2,sh:getvar("defshad")}})
+	,ooo2=t.addobj("obj2",{sticky:0
+		,css:{all:[333,333,oc.h-333,oc.w-333,,,"#faa #aa7"]}
+		,value:"<b>This is non-graphic object... </b>... Click please!"
+		,props:{closable:true,resizable:true,pressable:true}
+		,ch:{"[[name]]_cont":{props:{stretchable:[28,13,9,9]},css:{sh:getvar("defshad")}}}
+		,resizing:["[[name]]_cont"]
+		,scale:{catchid:"[[name]]_cont",share:["[[name]]_cont"]}
+	})
+	var ooo2c=gO(ooo2.id+"_cont");ooo2c.dblclick=ooo2.dblclick
+	ooo2.click=()=>{txt="";n=5;while (n>0) {n--;txt+="<br><br>"+aphorisms[grnd(aphorisms.length)]};stO(ooo2c,txt);ooo2.state=""}
+	ooo2.click()
+	scale_obj(owin,-.7,[oc.h,oc.w]);	scale_obj(ooo1,-.6);	scale_obj(ooo2,-.8)
+// *****************************************
+
+}
