@@ -78,35 +78,41 @@ imagelist: { //обязательные картинки, загружаются
 
  
 
-,init: function(){var o=this,opb=progressbar({text:"Loading data and img"}) // запуск progressbar
-
-// 	 	function exiterr(e) { //выход по ошибке
-// 			if (isE(e)) e=e.message
-// 			atO(d.body,"<b>" + e + "</b>",17,"#a33")
-// 			atO(d.body,sp(2)+"Continue not possible<br>",15,"gray")
-// 			opb.close()
-// 		}
-		loadImages(o.imagelist2,function(e){if (isR(e)) o.imgs2="err"; else o.imgs2=e})
-		loadImages(o.imagelist,function(e){if (isR(e)) exiterr(e.message+" (src="+o.src+")"); else { //обязательная часть картинок
+,init: function(){
+	var o=this,opb,ncur=0,nall=lkeys(o.imagelist)+lkeys(o.imagelist2)+lkeys(o.data)+lkeys(o.worlds)
+	opb=progressbar({text:"Loading data and images",cur:0,all:nall,active:0}) // запуск progressbar
+	opb.show()
+		loadImages(o.imagelist2,(e)=>{if (isR(e)) o.imgs2="err"; else o.imgs2=e},(e,cnt)=>{
+			let nm=li(e.target.src.split("/"))
+			upd_obj(opb.pars,{text:nm,cur:++ncur});opb.show()
+		})
+		loadImages(o.imagelist,(e)=>{if (isR(e)) exiterr(e.message+" (src="+o.src+")"); else { //обязательная часть картинок
 			o.imgs=e
 			sbrO(d.body,"no-repeat");sbpO(d.body,"50% -50%");sbiO(d.body,e.loading.src)
-			loadData(o.data,function(e){ //загрузка данных из списка в секции "data"
+			loadData(o.data,(e)=>{ //загрузка данных из списка в секции "data"
 				if (isR(e)) {opb.close();stO(d.body,"");exiterr(e.message)} else {
 					o.data=e
-					loadData(o.worlds,function(e){ //загрузка данных из списка в секции "worlds"
+					loadData(o.worlds,(e)=>{ //загрузка данных из списка в секции "worlds"
 						if (isR(e)) {opb.close();exiterr(e.message)} else {
 							for (var i in e) o[i]=e[i]
 							opb.show({text:"All data is ready. Preparing world...",delay:timeout}) // запуск progressbar
 							opb.sanim() //анимация progressbar, пока идет формирование мира
 							opb.close()
 							app.worlds=o //;app.curworld=o.startworld
-// c.log(o.startworld,o[o.startworld].initworld)
-							iff(o[o.startworld].initworld,o,o.startworld)}
+							iff(o[o.startworld].initworld,o,o.startworld)
+						}
 						opb.close()
-					})
-				}
+					},function(){
+						let nm=li(this.uri.split("/"))
+						upd_obj(opb.pars,{text:nm,cur:++ncur});opb.show()
+					})}
+			},function(){
+				let nm=li(this.uri.split("/"))
+				upd_obj(opb.pars,{text:nm,cur:++ncur});opb.show()
 			})
-			}
+		}},(e,cnt)=>{
+			let nm=li(e.target.src.split("/"))
+			upd_obj(opb.pars,{text:nm,cur:++ncur});opb.show()
 		})
 	//	return this	можно возвратить любые данные в программу, которая запустила их загрузку (init может возвратить модифицированные данные)
 }

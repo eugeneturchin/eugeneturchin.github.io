@@ -1615,9 +1615,11 @@ try{ // отладка
 			|| e.button>0  //не левая кнопка мыши
 			|| o.state=="process" //объект в состоянии обработки
 			|| e.target.id=="" //left obj (no id)
-// 		|| !isO(e.target.dat) //чужой объект
-			|| e.target!=co 
-				&& (!isO(o.dat[state]) || isA(o.dat[state].share) && valinobj(e.target.id,o.dat[state].share)===false) // проверка, что объекту разрешено разделять событие
+			|| !isO(e.target.dat) //чужой объект
+			|| e.target!=co
+			&& ( // проверка, что объекту разрешено разделять событие
+				!isO(o.dat[state]) || !isA(o.dat[state].share) || valinobj(e.target.id,o.dat[state].share)===false 
+			)
 		}
 		var i,om,bs,o4s,n4s,co,p=o.dat.props,nm=o.dat.name,andl=shortdelay,ps,mins=o.dat.icosize,dat
 		if (!isA(mins)) mins=minszico
@@ -1882,8 +1884,6 @@ try{ // отладка
 
 		if (p.scalable) { //масштабируемый
 			co=getco(o,"scale")
-c.log("scal!",co,o)
-// c.log("scal!",co,o)
 			co.onwheel=function(e){
 			if (co!=e.target) return
 				var [d,ot]=mwheel(e)
@@ -2398,7 +2398,7 @@ c.log("scal!",co,o)
 			o.sanim=function(){p.anim=1;fadein(nml);iterate(nml,function(cnt){if(p.anim=!p.anim) fadein(nml);else fadeout(nml)},p.delay)}
 			o.eanim=function(){iterate(nml);fadeout(nml)}
 			o.start=function(){
-				iterate(nmb)
+				iterate(nmb) //stop
 				if (isN(p.alltime) && !isN(p.all)) p.all=gint(p.alltime*1000/p.disc) //общее число шагов полного заполнения progressbarr, в течение "alltime" с интервалом "disc"
 				iterate(nmb,o.iterbar,p.disc)
 				o.show()
@@ -2406,7 +2406,7 @@ c.log("scal!",co,o)
 			o.close_also=o.close //function(){c.log("close2");o.close();return false}
 			o.iterbar=function(cnt){
 				var rc=iff(p.fuser,o,o)
-				if (rc===false) return false; if (rc===true) return //nothing do
+				if (rc===false || !p.active) return false; if (rc===true) return //nothing do
 				p.cur++
 				if (p.cur>=p.all) {
 					if (iff(p.fend,o,o,p)===false) return false
@@ -2414,7 +2414,6 @@ c.log("scal!",co,o)
 				}
 				o.show()
 			}
-
 			if (p.active && (p.all||p.alltime)) o.start()
 		}
 		return o
