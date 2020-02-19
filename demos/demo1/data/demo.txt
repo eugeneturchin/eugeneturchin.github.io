@@ -1,0 +1,51 @@
+// load("demo.txt").then(t=>eval(t))
+
+init_obj("container", {
+	css:{fs:99,bgc:"#eff #ffa"},
+	props:{stretchable:true},
+	value:"Главный контейнер"
+})
+
+init_obj(
+	{
+		name:"demo",
+		pname:"container",
+		css:{
+			all:[399,999,33,133,,,"#dfa #aaa","red","gray",77,333,"center",99,999,133,1333,9,"0 7px 33px -13px #7aa, inset 0 0 33px white","pointer",77,"-1px -1px 2px black, 1px 1px 2px white"]
+		},
+		resizing:["[[name]]_field1"],
+		scale:{catchid:"[[name]]"}
+		press:{catchid:"[[name]]_field11"},
+		move:{catchid:"[[name]]"},
+		props:{
+			scalable:true,
+			movable:[13,33,-199,0], // Если массив чисел, то это ограничение движения. movable:[top, bottom, left, right]; vmovable:[top, bottom], hmovable:[left, right]
+			pressable:true, 
+			closable:true, 
+			resizable:true,
+			maximizable:true,
+			minimizable:true,
+			breathable:false,
+			stretchable:false, //Если массив чисел, то это ограничение растягивания. stretchable:[top, bottom, left, right], vstretchable[top, bottom], hstretchable:[left, right]
+			parallaxable:false,
+			keypressable:false,
+			scrollable:false,
+			connectable:true,
+			aligned:true 		//haligned, valigned (можно задавать массив чисел - смещения от центра)
+		},
+		ch:{
+			"[[name]]_field1": {
+				value:"Простой текст",
+				css:{bo:"green",bgc:"#fee #aaf",fs:33},
+				props:{stretchable:[33,33,13,13]},
+				ch:{
+					"[[name]]!3":{
+						wid:199,gap:19,
+						props:{movable:true},
+						css:{all:[33,199,33,"eval{ [[gap]] + ([[mcount]]-1)*([[wid]]+[[gap]]) }",,,"#eee #aaf","black","gray",17,33],ts:"none",ro:3},
+						value:"Поле номер [[mcount]]"
+					}
+				}
+			}
+		}
+	})
